@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AllPayment Sanszz Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0b0b2d, #1a1a4a);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #4dc9ff;
+            text-shadow: 0 0 10px rgba(77, 201, 255, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #a0d2ff;
+            margin-bottom: 30px;
+        }
+        
+        .astronaut-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 30px 0;
+        }
+        
+        .astronaut {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%234dc9ff" opacity="0.2"/><circle cx="35" cy="40" r="8" fill="%23ffffff"/><circle cx="65" cy="40" r="8" fill="%23ffffff"/><circle cx="35" cy="40" r="4" fill="%230b0b2d"/><circle cx="65" cy="40" r="4" fill="%230b0b2d"/><path d="M30,65 Q50,80 70,65" stroke="%23ffffff" stroke-width="2" fill="none"/></svg>') no-repeat center center;
+            background-size: contain;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .planet {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff9d00, #ff5500);
+            box-shadow: 0 0 30px rgba(255, 157, 0, 0.7);
+            right: 10%;
+            bottom: 10%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
+        }
+        
+        .payment-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin: 50px 0;
+        }
+        
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .payment-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .payment-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #4dc9ff;
+            text-align: center;
+        }
+        
+        .payment-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .dana-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-btn {
+            background: #4dc9ff;
+            color: #0b0b2d;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #3ab0e6;
+            transform: scale(1.05);
+        }
+        
+        .copy-btn.copied {
+            background: #4caf50;
+        }
+        
+        .qris-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .qris-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .qris-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .qris-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .zoom-btn {
+            background: #ff9d00;
+            color: #0b0b2d;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .zoom-btn:hover {
+            background: #e68a00;
+            transform: scale(1.05);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(77, 201, 255, 0.5);
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0d2ff;
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .payment-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .dana-number {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Stars -->
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="logo">AllPayment Sanszz Store</h1>
+            <p class="tagline">Pembayaran Aman & Cepat untuk Pembelian Anda</p>
+            
+            <div class="astronaut-container">
+                <div class="astronaut"></div>
+                <div class="planet"></div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="payment-section">
+                <div class="payment-card">
+                    <h2 class="payment-title">Dana</h2>
+                    <div class="payment-info">
+                        <div class="dana-number">
+                            <span>085790214286</span>
+                            <button class="copy-btn" id="copyDana">Salin</button>
+                        </div>
+                        <p>Transfer ke nomor Dana di atas untuk menyelesaikan pembayaran</p>
+                    </div>
+                </div>
+                
+                <div class="payment-card">
+                    <h2 class="payment-title">QRIS</h2>
+                    <div class="payment-info">
+                        <div class="qris-container">
+                            <div class="qris-image" id="qrisImage">
+                                <img src="https://files.catbox.moe/q5mab1.jpg" alt="QRIS AllPayment Sanszz Store">
+                            </div>
+                            <button class="zoom-btn" id="zoomQris">Perbesar QR</button>
+                        </div>
+                        <p>Scan kode QR di atas untuk pembayaran melalui aplikasi e-wallet</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2025 AllPayment Sanszz Store. Semua hak dilindungi.</p>
+            <p>Hubungi kami jika mengalami masalah dengan pembayaran</p>
+        </footer>
+    </div>
+    
+    <!-- Modal untuk QRIS -->
+    <div class="modal" id="qrisModal">
+        <button class="close-modal" id="closeModal">&times;</button>
+        <div class="modal-content">
+            <img src="https://files.catbox.moe/q5mab1.jpg" alt="QRIS AllPayment Sanszz Store">
+        </div>
+    </div>
+    
+    <script>
+        // Membuat bintang-bintang di background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Posisi acak
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Ukuran acak
+                const size = Math.random() * 3;
+                
+                // Durasi animasi acak
+                const duration = Math.random() * 5 + 3;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDuration = `${duration}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Fungsi untuk menyalin nomor Dana
+        function copyDanaNumber() {
+            const danaNumber = '085790214286';
+            const copyButton = document.getElementById('copyDana');
+            
+            navigator.clipboard.writeText(danaNumber).then(() => {
+                // Ubah teks tombol sementara
+                copyButton.textContent = 'Tersalin!';
+                copyButton.classList.add('copied');
+                
+                // Kembalikan setelah 2 detik
+                setTimeout(() => {
+                    copyButton.textContent = 'Salin';
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+                alert('Gagal menyalin nomor Dana. Silakan salin secara manual.');
+            });
+        }
+        
+        // Fungsi untuk memperbesar QRIS
+        function zoomQris() {
+            const modal = document.getElementById('qrisModal');
+            modal.style.display = 'flex';
+        }
+        
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            const modal = document.getElementById('qrisModal');
+            modal.style.display = 'none';
+        }
+        
+        // Event listeners
+        document.getElementById('copyDana').addEventListener('click', copyDanaNumber);
+        document.getElementById('zoomQris').addEventListener('click', zoomQris);
+        document.getElementById('qrisImage').addEventListener('click', zoomQris);
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        
+        // Tutup modal ketika klik di luar gambar
+        document.getElementById('qrisModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Inisialisasi
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+        });
+    </script>
+</body>
+</html>
